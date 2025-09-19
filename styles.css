@@ -680,6 +680,45 @@ nav {
     padding: 2px 8px;
   }
 }
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4caf50; /* green for success */
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 9999;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-10px);
+  pointer-events: auto;
+}
+.order-success {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: #2ecc71;
+  color: #fff;
+  padding: 20px 40px;
+  border-radius: 12px;
+  text-align: center;
+  z-index: 1000;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+}
+
+.order-success.show {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
 
 
 

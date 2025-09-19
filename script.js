@@ -25,6 +25,7 @@ const products = [
   { year: 2022, name: "Shoe Rack", rent: "Rs.400", img: "24.png", location: "Kolkata" }
 ];
 
+// ---------- INIT CART ----------
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 // ---------- DOM ELEMENTS ----------
@@ -35,75 +36,34 @@ const cartDrawer = document.getElementById("cartDrawer");
 const cartContainer = document.getElementById("cartContainer");
 const cartTotal = document.getElementById("cartTotal");
 const closeCart = document.getElementById("closeCart");
+const checkoutBtn = document.getElementById("checkoutBtn");
 const toast = document.getElementById("toast");
-const signupModal = document.getElementById("signupModal");
-const signinModal = document.getElementById("signinModal");
-const signupBtn = document.querySelector(".transparent-btn");
-const signinBtn = document.querySelector(".blue-btn");
-const signupClose = document.getElementById("signupClose");
-const signinClose = document.getElementById("signinClose");
-const locationButtons = document.querySelectorAll("#locationFilter button");
-const searchInput = document.getElementById("searchLocation");
-const searchBtn = document.getElementById("searchBtn");
 
-// ---------- FILTER FUNCTION ----------
-function filterProducts() {
-  const query = searchInput.value.toLowerCase().trim();
-  let filtered = products;
-
-  if (query) filtered = filtered.filter(p => p.location.toLowerCase().includes(query));
-
-  const activeButton = document.querySelector("#locationFilter button.active");
-  if (activeButton && activeButton.dataset.location !== "All") {
-    filtered = filtered.filter(p => p.location === activeButton.dataset.location);
-  }
-
-  renderProducts(filtered);
-}
-
-// Search input realtime
-searchInput.addEventListener("input", filterProducts);
-
-// Location buttons
-locationButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    locationButtons.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    filterProducts();
-  });
-});
-
-// ---------- PRODUCT RENDER ----------
-function renderProducts(list = products) {
+// ---------- RENDER PRODUCTS ----------
+function renderProducts() {
   productsGrid.innerHTML = "";
-
-  list.forEach(product => {
+  products.forEach(product => {
+    const inCart = cart.find(item => item.name === product.name);
     const box = document.createElement("div");
     box.classList.add("box");
-
-    const inCart = cart.find(item => item.name === product.name);
-
     box.innerHTML = `
       <div class="box-img">
         <img src="${product.img}" alt="${product.name}">
       </div>
       <div class="product-meta">
-  <span class="year">${product.year}</span>
-  <span class="location">${product.location}</span>
-</div>
-
+        <span class="year">${product.year}</span>
+        <span class="location">${product.location}</span>
+      </div>
       <h3>${product.name}</h3>
       <h2>${product.rent} <span>/month</span></h2>
       <button class="btn ${inCart ? "added" : ""}">
         ${inCart ? "✔ Added" : "Rent Now"}
       </button>
     `;
-
     const btn = box.querySelector(".btn");
     btn.addEventListener("click", () => {
       const index = cart.findIndex(item => item.name === product.name);
-
-      if (index === -1) {
+      if(index === -1) {
         cart.push({ ...product, quantity: 1 });
         btn.innerText = "✔ Added";
         btn.classList.add("added");
@@ -114,16 +74,14 @@ function renderProducts(list = products) {
         btn.classList.remove("added");
         showToast(`${product.name} removed from cart!`, true);
       }
-
       localStorage.setItem("cart", JSON.stringify(cart));
       renderCart();
     });
-
     productsGrid.appendChild(box);
   });
 }
 
-// ---------- CART RENDER ----------
+// ---------- RENDER CART ----------
 function renderCart() {
   cartContainer.innerHTML = "";
   let total = 0;
@@ -144,7 +102,6 @@ function renderCart() {
       </div>
       <button class="remove-item">&times;</button>
     `;
-
     const rentValue = parseInt(item.rent.replace("Rs.", ""));
     total += rentValue * item.quantity;
 
@@ -154,16 +111,13 @@ function renderCart() {
       renderCart();
       renderProducts();
     });
-
     div.querySelector(".minus").addEventListener("click", () => {
-      if (item.quantity > 1) item.quantity--;
+      if(item.quantity > 1) item.quantity--;
       else cart.splice(index, 1);
-
       localStorage.setItem("cart", JSON.stringify(cart));
       renderCart();
       renderProducts();
     });
-
     div.querySelector(".remove-item").addEventListener("click", () => {
       cart.splice(index, 1);
       localStorage.setItem("cart", JSON.stringify(cart));
@@ -174,7 +128,7 @@ function renderCart() {
     cartContainer.appendChild(div);
   });
 
-  cartTotal.innerText = `Total Monthly Rent: Rs.${total}`;
+  cartTotal.textContent = `Total Monthly Rent: Rs.${total}`;
   updateCartCount();
 }
 
@@ -190,10 +144,9 @@ cartBtn.addEventListener("click", () => {
   cartBtn.style.display = "none";
   renderCart();
 });
-
 closeCart.addEventListener("click", () => {
   cartDrawer.classList.remove("open");
-  cartBtn.style.display = "block";
+  cartBtn.style.display = "inline-block";
 });
 
 // ---------- TOAST ----------
@@ -204,57 +157,40 @@ function showToast(message, isError = false) {
   setTimeout(() => toast.classList.remove("show"), 2500);
 }
 
-// ---------- MODALS ----------
-signupBtn.onclick = () => signupModal.style.display = "block";
-signinBtn.onclick = () => signinModal.style.display = "block";
-signupClose.onclick = () => signupModal.style.display = "none";
-signinClose.onclick = () => signinModal.style.display = "none";
-window.onclick = (e) => {
-  if (e.target === signupModal) signupModal.style.display = "none";
-  if (e.target === signinModal) signinModal.style.display = "none";
-};
+// ---------- CHECKOUT WITH SUCCESS ANIMATION ----------
+checkoutBtn.addEventListener("click", () => {
+  if(cart.length === 0){
+    showToast("Cart is empty!");
+    return;
+  }
 
-// ---------- SIGNUP ----------
-document.querySelector("#signupModal form").addEventListener("submit", function(e) {
-  e.preventDefault();
-  const name = this.querySelector('input[type="text"]').value;
-  const email = this.querySelector('input[type="email"]').value;
-  const password = this.querySelector('input[type="password"]').value;
+  // Clear cart items
+  cart = [];
+  localStorage.setItem("cart", JSON.stringify(cart));
+  cartContainer.innerHTML = "";
+  cartTotal.textContent = "Total Monthly Rent: Rs.0";
+  updateCartCount();
 
-  const users = JSON.parse(localStorage.getItem("users") || "[]");
-  if (users.some(u => u.email === email)) { showToast("Email already registered!", true); return; }
+  // Create success overlay inside drawer
+  const overlay = document.createElement("div");
+  overlay.classList.add("order-success");
+  overlay.innerHTML = `
+    <h2>Order Successful!</h2>
+    <p>Thank you for your purchase.</p>
+  `;
+  cartDrawer.appendChild(overlay);
 
-  users.push({ name, email, password });
-  localStorage.setItem("users", JSON.stringify(users));
-  showToast("Sign Up Successful!");
-  this.reset();
-  setTimeout(() => signupModal.style.display = "none", 1500);
+  // Animate overlay
+  overlay.classList.add("show");
+
+  setTimeout(() => {
+    overlay.classList.remove("show");
+    cartDrawer.removeChild(overlay); // remove overlay
+    cartDrawer.classList.remove("open"); // close drawer
+    cartBtn.style.display = "inline-block"; // keep cart button visible
+  }, 2000);
 });
 
-// ---------- SIGNIN ----------
-document.querySelector("#signinModal form").addEventListener("submit", function(e) {
-  e.preventDefault();
-  const email = this.querySelector('input[type="email"]').value;
-  const password = this.querySelector('input[type="password"]').value;
-  const users = JSON.parse(localStorage.getItem("users") || "[]");
-  const user = users.find(u => u.email === email && u.password === password);
-
-  if (user) {
-    document.getElementById("welcomeUser").innerText = `Hi, ${user.name}`;
-    document.getElementById("logoutBtn").style.display = "inline-block";
-    showToast(`Welcome back, ${user.name}!`);
-    this.reset();
-    signinModal.style.display = "none";
-  } else showToast("Invalid email or password!", true);
-});
-
-// ---------- LOGOUT ----------
-document.getElementById("logoutBtn").addEventListener("click", () => {
-  document.getElementById("welcomeUser").innerText = "";
-  document.getElementById("logoutBtn").style.display = "none";
-  showToast("You have logged out!");
-});
-
-// ---------- INIT ----------
+// ---------- INITIALIZE ----------
 renderProducts();
 renderCart();
