@@ -87,9 +87,11 @@ function renderProducts(list = products) {
       <div class="box-img">
         <img src="${product.img}" alt="${product.name}">
       </div>
-      <p class="product-meta">
-        ${product.year}  <span class="location">${product.location}</span>
-      </p>
+      <div class="product-meta">
+  <span class="year">${product.year}</span>
+  <span class="location">${product.location}</span>
+</div>
+
       <h3>${product.name}</h3>
       <h2>${product.rent} <span>/month</span></h2>
       <button class="btn ${inCart ? "added" : ""}">
