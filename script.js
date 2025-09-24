@@ -1,31 +1,31 @@
 // ---------- DATA ----------
 const products = [
-  { year: 2023, name: "Yellow Lawson - Single", rent: "Rs.600", img: "2.png", location: "Delhi" },
-  { year: 2023, name: "Blue High Lawson - Single", rent: "Rs.700", img: "3.png", location: "Mumbai" },
-  { year: 2022, name: "Off White Storage Cabinet", rent: "Rs.500", img: "4.png", location: "Bangalore" },
-  { year: 2022, name: "3 Drawer Storage Cabinet", rent: "Rs.300", img: "5.png", location: "Chennai" },
-  { year: 2024, name: "Royal Queen Bed", rent: "Rs.1500", img: "6.png", location: "Delhi" },
-  { year: 2024, name: "Maroon ChesterField", rent: "Rs.1500", img: "7.png", location: "Mumbai" },
-  { year: 2023, name: "Dining Table - 6 Seater", rent: "Rs.1200", img: "8.jpg", location: "Hyderabad" },
-  { year: 2023, name: "Office Chair", rent: "Rs.400", img: "9.png", location: "Pune" },
-  { year: 2021, name: "Bookshelf", rent: "Rs.350", img: "10.png", location: "Kolkata" },
-  { year: 2022, name: "Sofa Set", rent: "Rs.2000", img: "11.png", location: "Delhi" },
-  { year: 2023, name: "Coffee Table", rent: "Rs.450", img: "12.png", location: "Mumbai" },
-  { year: 2023, name: "Recliner Chair", rent: "Rs.900", img: "13.png", location: "Bangalore" },
-  { year: 2024, name: "Study Desk", rent: "Rs.600", img: "14.png", location: "Chennai" },
-  { year: 2022, name: "Wooden Wardrobe", rent: "Rs.1100", img: "15.png", location: "Hyderabad" },
-  { year: 2021, name: "Single Mattress", rent: "Rs.500", img: "16.png", location: "Pune" },
-  { year: 2023, name: "Double Mattress", rent: "Rs.800", img: "17.png", location: "Kolkata" },
-  { year: 2024, name: "Corner Sofa", rent: "Rs.2200", img: "18.png", location: "Delhi" },
-  { year: 2022, name: "Rocking Chair", rent: "Rs.550", img: "19.png", location: "Mumbai" },
-  { year: 2021, name: "Kids Bed", rent: "Rs.700", img: "20.png", location: "Bangalore" },
-  { year: 2024, name: "Modular Kitchen Rack", rent: "Rs.1300", img: "21.png", location: "Chennai" },
-  { year: 2023, name: "TV Stand", rent: "Rs.750", img: "22.png", location: "Hyderabad" },
-  { year: 2023, name: "Bean Bag", rent: "Rs.300", img: "23.png", location: "Pune" },
-  { year: 2022, name: "Shoe Rack", rent: "Rs.400", img: "24.png", location: "Kolkata" }
+  { year: 2023, name: "Yellow Lawson - Single", category: "Sofa", rent: "Rs.600", img: "2.png", location: "Delhi" },
+  { year: 2023, name: "Blue High Lawson - Single", category: "Sofa", rent: "Rs.700", img: "3.png", location: "Mumbai" },
+  { year: 2022, name: "Off White Storage Cabinet", category: "Storage", rent: "Rs.500", img: "4.png", location: "Bangalore" },
+  { year: 2022, name: "3 Drawer Storage Cabinet", category: "Storage", rent: "Rs.300", img: "5.png", location: "Chennai" },
+  { year: 2024, name: "Royal Queen Bed", category: "Bed", rent: "Rs.1500", img: "6.png", location: "Delhi" },
+  { year: 2024, name: "Maroon ChesterField", category: "Sofa", rent: "Rs.1500", img: "7.png", location: "Mumbai" },
+  { year: 2023, name: "Dining Table - 6 Seater", category: "Table", rent: "Rs.1200", img: "8.jpg", location: "Hyderabad" },
+  { year: 2023, name: "Office Chair", category: "Chair", rent: "Rs.400", img: "9.png", location: "Pune" },
+  { year: 2021, name: "Bookshelf", category: "Storage", rent: "Rs.350", img: "10.png", location: "Kolkata" },
+  { year: 2022, name: "Sofa Set", category: "Sofa", rent: "Rs.2000", img: "11.png", location: "Hyderabad" },
+  { year: 2023, name: "Coffee Table", category: "Table", rent: "Rs.450", img: "12.png", location: "Mumbai" },
+  { year: 2023, name: "Recliner Chair", category: "Chair", rent: "Rs.900", img: "13.png", location: "Bangalore" },
+  { year: 2024, name: "Study Desk", category: "Table", rent: "Rs.600", img: "14.png", location: "Chennai" },
+  { year: 2022, name: "Wooden Wardrobe", category: "Storage", rent: "Rs.1100", img: "15.png", location: "Hyderabad" },
+  { year: 2021, name: "Single Mattress", category: "Bed", rent: "Rs.500", img: "16.png", location: "Pune" },
+  { year: 2023, name: "Double Mattress", category: "Bed", rent: "Rs.800", img: "17.png", location: "Kolkata" },
+  { year: 2024, name: "Corner Sofa", category: "Sofa", rent: "Rs.2200", img: "18.png", location: "Delhi" },
+  { year: 2022, name: "Rocking Chair", category: "Chair", rent: "Rs.550", img: "19.png", location: "Mumbai" },
+  { year: 2021, name: "Kids Bed", category: "Bed", rent: "Rs.700", img: "20.png", location: "Bangalore" },
+  { year: 2024, name: "Modular Kitchen Rack", category: "Storage", rent: "Rs.1300", img: "21.png", location: "Chennai" },
+  { year: 2023, name: "TV Stand", category: "Storage", rent: "Rs.750", img: "22.png", location: "Hyderabad" },
+  { year: 2023, name: "Bean Bag", category: "Chair", rent: "Rs.300", img: "23.png", location: "Pune" },
+  { year: 2022, name: "Shoe Rack", category: "Storage", rent: "Rs.400", img: "24.png", location: "Kolkata" }
 ];
 
-// ---------- INIT CART ----------
+// ---------- CART ----------
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 // ---------- DOM ELEMENTS ----------
@@ -38,11 +38,40 @@ const cartTotal = document.getElementById("cartTotal");
 const closeCart = document.getElementById("closeCart");
 const checkoutBtn = document.getElementById("checkoutBtn");
 const toast = document.getElementById("toast");
+const searchInput = document.getElementById("searchInput");
+
+// ---------- RENDER CATEGORIES ----------
+const categories = ["All", "Sofa", "Bed", "Chair", "Table", "Storage"];
+const categoryContainer = document.createElement("div");
+categoryContainer.classList.add("categories");
+
+categories.forEach(cat => {
+  const box = document.createElement("div");
+  box.classList.add("category-box");
+  box.dataset.category = cat;
+  box.innerHTML = `<h3>${cat}</h3>`; // Replace with image if you want
+  categoryContainer.appendChild(box);
+
+  box.addEventListener("click", () => {
+    renderProducts(cat);
+  });
+});
+
+document.querySelector(".availableOnRent").prepend(categoryContainer);
 
 // ---------- RENDER PRODUCTS ----------
-function renderProducts() {
+function renderProducts(filterCategory = "All") {
   productsGrid.innerHTML = "";
-  products.forEach(product => {
+
+  const filteredProducts = products.filter(product => {
+    if(filterCategory === "All") return true;
+    return product.category === filterCategory;
+  }).filter(product => {
+    const query = searchInput.value.toLowerCase();
+    return product.name.toLowerCase().includes(query) || product.location.toLowerCase().includes(query);
+  });
+
+  filteredProducts.forEach(product => {
     const inCart = cart.find(item => item.name === product.name);
     const box = document.createElement("div");
     box.classList.add("box");
@@ -81,7 +110,12 @@ function renderProducts() {
   });
 }
 
-// ---------- RENDER CART ----------
+// ---------- SEARCH ----------
+searchInput.addEventListener("input", () => {
+  renderProducts(); // filtering happens inside renderProducts
+});
+
+// ---------- CART FUNCTIONS ----------
 function renderCart() {
   cartContainer.innerHTML = "";
   let total = 0;
@@ -102,6 +136,7 @@ function renderCart() {
       </div>
       <button class="remove-item">&times;</button>
     `;
+
     const rentValue = parseInt(item.rent.replace("Rs.", ""));
     total += rentValue * item.quantity;
 
@@ -111,6 +146,7 @@ function renderCart() {
       renderCart();
       renderProducts();
     });
+
     div.querySelector(".minus").addEventListener("click", () => {
       if(item.quantity > 1) item.quantity--;
       else cart.splice(index, 1);
@@ -118,6 +154,7 @@ function renderCart() {
       renderCart();
       renderProducts();
     });
+
     div.querySelector(".remove-item").addEventListener("click", () => {
       cart.splice(index, 1);
       localStorage.setItem("cart", JSON.stringify(cart));
@@ -132,18 +169,17 @@ function renderCart() {
   updateCartCount();
 }
 
-// ---------- CART COUNT ----------
 function updateCartCount() {
   cartCount.textContent = cart.length;
   cartCount.style.display = cart.length === 0 ? "none" : "inline-block";
 }
 
-// ---------- CART TOGGLE ----------
 cartBtn.addEventListener("click", () => {
   cartDrawer.classList.add("open");
   cartBtn.style.display = "none";
   renderCart();
 });
+
 closeCart.addEventListener("click", () => {
   cartDrawer.classList.remove("open");
   cartBtn.style.display = "inline-block";
@@ -157,37 +193,32 @@ function showToast(message, isError = false) {
   setTimeout(() => toast.classList.remove("show"), 2500);
 }
 
-// ---------- CHECKOUT WITH SUCCESS ANIMATION ----------
+// ---------- CHECKOUT ----------
 checkoutBtn.addEventListener("click", () => {
   if(cart.length === 0){
     showToast("Cart is empty!");
     return;
   }
 
-  // Clear cart items
   cart = [];
   localStorage.setItem("cart", JSON.stringify(cart));
   cartContainer.innerHTML = "";
   cartTotal.textContent = "Total Monthly Rent: Rs.0";
   updateCartCount();
+  renderProducts();
 
-  // Create success overlay inside drawer
   const overlay = document.createElement("div");
   overlay.classList.add("order-success");
-  overlay.innerHTML = `
-    <h2>Order Successful!</h2>
-    <p>Thank you for your purchase.</p>
-  `;
+  overlay.innerHTML = `<h2>Order Successful!</h2><p>Thank you for your purchase.</p>`;
   cartDrawer.appendChild(overlay);
 
-  // Animate overlay
   overlay.classList.add("show");
 
   setTimeout(() => {
     overlay.classList.remove("show");
-    cartDrawer.removeChild(overlay); // remove overlay
-    cartDrawer.classList.remove("open"); // close drawer
-    cartBtn.style.display = "inline-block"; // keep cart button visible
+    cartDrawer.removeChild(overlay);
+    cartDrawer.classList.remove("open");
+    cartBtn.style.display = "inline-block";
   }, 2000);
 });
 
